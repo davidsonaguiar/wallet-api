@@ -3,9 +3,9 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 
-import { errorHandler } from "./error/error-handler";
+import { errorHandler } from "./middleware/error-handler";
+import { userRouter } from "./routers/router-user";
 
-import { userRouter } from "./resources/user/user-routes";
 
 const app = express();
 app.use(bodyParser.json());

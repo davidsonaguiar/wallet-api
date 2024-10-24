@@ -1,6 +1,7 @@
-import { User } from "../../src/resources/user/user";
-import { IUserRepository } from "./../../src/resources/user/protocols/user-repository";
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
+
+import { IUserRepository } from "./../../../resources/user/protocols/user-protocol-repository";
+import { User } from "../../../resources/user/user";
 
 export class UserRepositoryPrisma implements IUserRepository {
     private constructor(private readonly prismaClient: PrismaClient) {}
@@ -20,34 +21,30 @@ export class UserRepositoryPrisma implements IUserRepository {
         });
     }
 
-    public async findById(input: string): Promise<User> {
+    public async findById(input: string): Promise<User | null> {
         const user = await this.prismaClient.user.findUnique({
             where: {
                 id: input,
             },
         });
-
-        return user;
+        if (!user) return null;
+        return User.create(user);
     }
 
-
-    public async findByEmail(input: string): Promise<User> {
+    public async findByEmail(input: string): Promise<User | null> {
         const user = await this.prismaClient.user.findUnique({
             where: {
                 email: input,
             },
         });
-
-        return user;
+        if (!user) return null;
+        return User.create(user);
     }
-
 
     public async findAll(): Promise<User[]> {
         const users = await this.prismaClient.user.findMany();
-
-        return users;
+        return users.map((user) => User.create(user));
     }
-
 
     public async update(input: User): Promise<void> {
         await this.prismaClient.user.update({
@@ -62,7 +59,6 @@ export class UserRepositoryPrisma implements IUserRepository {
         });
     }
 
-    
     public async delete(input: string): Promise<void> {
         await this.prismaClient.user.delete({
             where: {

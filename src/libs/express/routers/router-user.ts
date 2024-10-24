@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { routeAdapter } from "../../common/route-adapter";
-import { userControllerRegister } from "./factores/user-factor-register";
+
+import { routeAdapter } from "../adapters/route-adapter";
+import { userControllerRegister } from "../../../resources/user/factores/user-factor-register";
+
 
 const userRouter = Router();
 

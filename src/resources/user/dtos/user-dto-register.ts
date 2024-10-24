@@ -1,5 +1,5 @@
 import zod from "zod";
-import { ErrorStandard } from "../../../error/error-standard";
+import { StandardError } from "../../../common/error/standard-error";
 
 export const UserDtoRegisterSchema = zod.object({
     name: zod.string().min(3).max(255).trim(),
@@ -18,7 +18,7 @@ export class UserDtoRegister {
 
     validate(): UserDtoRegisterType {
         const result = UserDtoRegisterSchema.safeParse(this);
-        if (!result.success) ErrorStandard.badRequest(result.error.message);
+        if (!result.success) StandardError.badRequest(result.error.message);
         return {
             name: this.name,
             email: this.email,

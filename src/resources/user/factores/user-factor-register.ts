@@ -1,6 +1,6 @@
 import { UserControllerRegister } from './../controllers/user-controller-register';
-import { prismaClient } from "../../../../prisma/prisma-client";
-import { UserRepositoryPrisma } from "../../../../prisma/repositories/user-repository";
+import { prismaClient } from "../../../libs/prisma/prisma-client";
+import { UserRepositoryPrisma } from "../../../libs/prisma/repositories/user-repository";
 import { UserProviderPasswordEncrypter } from "../providers/user-provider-password-encrypter";
 import { UserCreateService } from "../services/user-service-create";
 

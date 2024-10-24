@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IController } from "./protocols/controller";
+import { IController } from "../../../common/protocols/controller";
 
 export function routeAdapter(controller: IController) {
     return async (req: Request, res: Response, next: NextFunction) => {

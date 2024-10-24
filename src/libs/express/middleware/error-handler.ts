@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { ErrorStandard } from "./error-standard";
+import { StandardError } from "../../../common/error/standard-error";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-    if (err instanceof ErrorStandard) {
+    if (err instanceof StandardError) {
         res.status(err.getStatus()).json({ message: err.message });
     } else {
         console.log(err);

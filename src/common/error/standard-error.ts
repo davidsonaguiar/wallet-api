@@ -1,4 +1,4 @@
-export class ErrorStandard extends Error {
+export class StandardError extends Error {
     private readonly status: number;
 
     private constructor(message: string, status: number) {
@@ -12,22 +12,22 @@ export class ErrorStandard extends Error {
     }
 
     static badRequest(message: string) {
-        return new ErrorStandard(message, 400);
+        return new StandardError(message, 400);
     }
 
     static conflict(message: string) {
-        return new ErrorStandard(message, 409);
+        return new StandardError(message, 409);
     }
 
     static forbidden(message: string) {
-        return new ErrorStandard(message, 403);
+        return new StandardError(message, 403);
     }
 
     static notFound(message: string) {
-        return new ErrorStandard(message, 404);
+        return new StandardError(message, 404);
     }
 
     static unauthorized(message: string) {
-        return new ErrorStandard(message, 401);
+        return new StandardError(message, 401);
     }
 }

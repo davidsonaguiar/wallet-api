@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { IUserPasswordEncrypter } from "../protocols/user-password-encrypter";
-
+import { IUserPasswordEncrypter } from "./../protocols/user-protocol-password-encrypter";
 
 export class UserProviderPasswordEncrypter implements IUserPasswordEncrypter {
     private constructor() {}
@@ -10,12 +9,12 @@ export class UserProviderPasswordEncrypter implements IUserPasswordEncrypter {
         return new UserProviderPasswordEncrypter();
     }
 
-    async encrypt (password: string): Promise<string> {
+    async encrypt(password: string): Promise<string> {
         const salt = await bcrypt.genSalt(12);
         return bcrypt.hash(password, salt);
     }
 
-    async compare (password: string, hash: string): Promise<boolean> {
+    async compare(password: string, hash: string): Promise<boolean> {
         return bcrypt.compare(password, hash);
     }
 }

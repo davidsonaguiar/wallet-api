@@ -1,8 +1,9 @@
+import { IUserRepository } from './../protocols/user-protocol-repository';
 import { IService } from "./../../../common/protocols/service";
-import { ErrorStandard } from "./../../../error/error-standard";
+import { StandardError } from "../../../common/error/standard-error";
 import { User, UserCreateProps } from "../user";
-import { IUserRepository } from "../protocols/user-repository";
-import { IUserPasswordEncrypter } from "../protocols/user-password-encrypter";
+import { IUserPasswordEncrypter } from "../protocols/user-protocol-password-encrypter";	
+import { UserErrorEmailAlreadyRegister } from '../errors/user-error-email-already-register';
 
 export type Input = {
     name: string;
@@ -28,7 +29,7 @@ export class UserCreateService implements IService<Input, Output> {
 
     public async execute(input: UserCreateProps) {
         const emailAlreadyExists = await this.userRepository.findByEmail(input.email);
-        if (emailAlreadyExists) ErrorStandard.conflict("Email already exists");
+        if (emailAlreadyExists) throw UserErrorEmailAlreadyRegister.create(input.email);
         input.password = await this.passwordEncrypter.encrypt(input.password);
         const user = User.create(input);
         await this.userRepository.save(user);
