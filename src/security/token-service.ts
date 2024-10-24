@@ -1,4 +1,4 @@
-import { StandardError } from './../common/error/standard-error';
+import { StandardError } from '../common/error/standard-error';
 import jwt, { Algorithm } from "jsonwebtoken";
 
 export interface ITokenService {
@@ -6,7 +6,7 @@ export interface ITokenService {
     verify(token: string): Promise<string>;
 }
 
-export class SecurityTokenService implements ITokenService {
+export class TokenService implements ITokenService {
     private readonly secret: string;
     private readonly expiresIn: number;
     private readonly algorithm: Algorithm;
@@ -16,8 +16,8 @@ export class SecurityTokenService implements ITokenService {
         this.algorithm = "HS256";
     }
 
-    public static create(): SecurityTokenService {
-        return new SecurityTokenService();
+    public static create(): TokenService {
+        return new TokenService();
     }
 
     async sign(payload: string): Promise<string> {

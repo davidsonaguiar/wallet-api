@@ -1,9 +1,8 @@
-import { IUserRepository } from './../protocols/user-protocol-repository';
-import { IService } from "./../../../common/protocols/service";
-import { StandardError } from "../../../common/error/standard-error";
+import { IUserRepository } from '../protocols/user-repository.protocol';
+import { IService } from "../../../common/protocols/service";
 import { User, UserCreateProps } from "../user";
-import { IUserPasswordEncrypter } from "../protocols/user-protocol-password-encrypter";	
-import { UserErrorEmailAlreadyRegister } from '../errors/user-error-email-already-register';
+import { IPasswordEncrypter } from "../protocols/password-encrypter.protocol";	
+import { UserErrorEmailAlreadyRegister } from '../errors/user-email-already-register.error';
 
 export type Input = {
     name: string;
@@ -17,14 +16,14 @@ export type Output = {
     email: string;
 };
 
-export class UserServiceCreate implements IService<Input, Output> {
+export class CreateUserService implements IService<Input, Output> {
     private constructor(
         private readonly userRepository: IUserRepository,
-        private readonly passwordEncrypter: IUserPasswordEncrypter
+        private readonly passwordEncrypter: IPasswordEncrypter
     ) {}
 
-    public static create(userRepository: IUserRepository, passwordEncrypter: IUserPasswordEncrypter) {
-        return new UserServiceCreate(userRepository, passwordEncrypter);
+    public static create(userRepository: IUserRepository, passwordEncrypter: IPasswordEncrypter) {
+        return new CreateUserService(userRepository, passwordEncrypter);
     }
 
     public async execute(input: UserCreateProps) {

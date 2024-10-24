@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 
-import { errorHandler } from "./middleware/error-handler";
+import { ErrorMiddleware } from "./middleware/error.middleware";
 import { userRouter } from "./routers/router-user";
 
 
@@ -15,6 +15,6 @@ app.use(cors({ origin: "*" }));
 
 app.use("/users", userRouter);
 
-app.use(errorHandler);
+app.use(ErrorMiddleware);
 
 export { app };

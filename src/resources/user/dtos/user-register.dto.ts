@@ -1,23 +1,23 @@
 import zod from "zod";
 import { StandardError } from "../../../common/error/standard-error";
 
-export const UserDtoRegisterSchema = zod.object({
+export const UserRegisterSchema = zod.object({
     name: zod.string().min(3).max(255).trim(),
     email: zod.string().email().trim(),
     password: zod.string().min(6),
 });
 
-export type UserDtoRegisterType = zod.infer<typeof UserDtoRegisterSchema>;
+export type UserRegisterDtoType = zod.infer<typeof UserRegisterSchema>;
 
-export class UserDtoRegister {
+export class UserRegisterDto {
     constructor(
         private readonly name: string,
         private readonly email: string,
         private readonly password: string
     ) {}
 
-    validate(): UserDtoRegisterType {
-        const result = UserDtoRegisterSchema.safeParse(this);
+    validate(): UserRegisterDtoType {
+        const result = UserRegisterSchema.safeParse(this);
         if (!result.success) StandardError.badRequest(result.error.message);
         return {
             name: this.name,

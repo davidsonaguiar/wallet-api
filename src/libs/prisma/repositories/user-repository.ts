@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import { IUserRepository } from "./../../../resources/user/protocols/user-protocol-repository";
+import { IUserRepository } from "./../../../resources/user/protocols/user-repository.protocol";
 import { User } from "../../../resources/user/user";
 
 export class UserRepositoryPrisma implements IUserRepository {
