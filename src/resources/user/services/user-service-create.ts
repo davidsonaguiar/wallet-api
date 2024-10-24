@@ -17,14 +17,14 @@ export type Output = {
     email: string;
 };
 
-export class UserCreateService implements IService<Input, Output> {
+export class UserServiceCreate implements IService<Input, Output> {
     private constructor(
         private readonly userRepository: IUserRepository,
         private readonly passwordEncrypter: IUserPasswordEncrypter
     ) {}
 
     public static create(userRepository: IUserRepository, passwordEncrypter: IUserPasswordEncrypter) {
-        return new UserCreateService(userRepository, passwordEncrypter);
+        return new UserServiceCreate(userRepository, passwordEncrypter);
     }
 
     public async execute(input: UserCreateProps) {

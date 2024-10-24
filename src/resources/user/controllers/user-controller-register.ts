@@ -1,11 +1,20 @@
-import { HttpRequest, HttpResponse, IController } from "../../../common/protocols/controller";
+import { ITokenService } from "./../../../security/security-token-service";
+import {
+    HttpRequest,
+    HttpResponse,
+    IController,
+} from "../../../common/protocols/controller";
 import { UserDtoRegister } from "../dtos/user-dto-register";
-import { UserCreateService } from "../services/user-service-create";
+import { UserServiceCreate } from "../services/user-service-create";
 
 export class UserControllerRegister implements IController {
-    private constructor(private readonly userCreateService: UserCreateService) {}
+    private constructor(
+        private readonly userCreateService: UserServiceCreate
+    ) {}
 
-    public static create(userCreateService: UserCreateService): UserControllerRegister {
+    public static create(
+        userCreateService: UserServiceCreate
+    ): UserControllerRegister {
         return new UserControllerRegister(userCreateService);
     }
 

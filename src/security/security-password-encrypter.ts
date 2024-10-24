@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { IUserPasswordEncrypter } from "./../protocols/user-protocol-password-encrypter";
+import { IUserPasswordEncrypter } from "../resources/user/protocols/user-protocol-password-encrypter";
 
 export class UserProviderPasswordEncrypter implements IUserPasswordEncrypter {
     private constructor() {}
