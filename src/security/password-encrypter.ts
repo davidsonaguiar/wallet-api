@@ -1,8 +1,11 @@
 import bcrypt from "bcrypt";
 
-import { IUserPasswordEncrypter } from "../resources/user/protocols/user-protocol-password-encrypter";
+export interface IPasswordEncrypter {
+    encrypt: (password: string) => Promise<string>;
+    compare: (password: string, hash: string) => Promise<boolean>;
+}
 
-export class PasswordEncrypter implements IUserPasswordEncrypter {
+export class PasswordEncrypter implements IPasswordEncrypter {
     private constructor() {}
 
     public static create(): PasswordEncrypter {

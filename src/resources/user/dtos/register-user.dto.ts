@@ -1,5 +1,6 @@
 import zod from "zod";
 import { StandardError } from "../../../common/error/standard-error";
+import {IDto} from "../../../common/protocols/dto.protocol";
 
 export const UserRegisterSchema = zod.object({
     name: zod.string().min(3).max(255).trim(),
@@ -9,7 +10,7 @@ export const UserRegisterSchema = zod.object({
 
 export type UserRegisterDtoType = zod.infer<typeof UserRegisterSchema>;
 
-export class UserRegisterDto {
+export class RegisterUserDto {
     constructor(
         private readonly name: string,
         private readonly email: string,

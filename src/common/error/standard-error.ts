@@ -30,4 +30,8 @@ export class StandardError extends Error {
     static unauthorized(message: string) {
         return new StandardError(message, 401);
     }
+
+    static unprocessableEntity(message: string) {
+        return new StandardError(message, 422);
+    }
 }

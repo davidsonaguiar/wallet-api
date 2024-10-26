@@ -2,17 +2,18 @@ import { StandardError } from '../common/error/standard-error';
 import jwt, { Algorithm } from "jsonwebtoken";
 
 export interface ITokenService {
-    sign(payload: string): Promise<string>;
-    verify(token: string): Promise<string>;
+    sign(payload: string): string;
+    verify(token: string): string;
 }
 
 export class TokenService implements ITokenService {
     private readonly secret: string;
-    private readonly expiresIn: number;
+    private readonly expiresIn: string;
     private readonly algorithm: Algorithm;
 
     private constructor() {
         this.secret = process.env.JWT_SECRET || "secret";
+        this.expiresIn = "1d";
         this.algorithm = "HS256";
     }
 
@@ -20,18 +21,22 @@ export class TokenService implements ITokenService {
         return new TokenService();
     }
 
-    async sign(payload: string): Promise<string> {
+    sign(email: string): string {
         try {
-            return jwt.sign(payload, this.secret);
+            return jwt.sign({ email }, this.secret, {
+                algorithm: this.algorithm,
+                expiresIn: this.expiresIn
+            });
         }
         catch (error) {
+            console.log(error);
             throw StandardError.unauthorized("Error generating token");
         }
     }
 
-    async verify(token: string): Promise<string> {
+    verify(token: string): string {
         const decoded = jwt.verify(token, this.secret);
-        if(typeof decoded === "string") return decoded;
+        if(typeof decoded !== "string") return decoded.email;
         throw StandardError.unauthorized("Invalid token");
     }
 }
